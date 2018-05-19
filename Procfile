@@ -1,1 +1,1 @@
-web:gunicorn RideAlong.wsgi
+web: gunicorn RideAlong.wsgi
