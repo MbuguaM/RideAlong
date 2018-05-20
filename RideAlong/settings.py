@@ -18,7 +18,7 @@ db_from_env=dj_database_url.config(conn_max_age=500)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+PROJOECT_ROOT = os.path.dirname(os.path.dirname(__file__))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -61,8 +61,11 @@ ROOT_URLCONF = 'RideAlong.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [
+            # absolute paths
+            os.path.join(PROJOECT_ROOT,'templates').replace('\\','/'),
+        ],
+        'APP_DIRS': False,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -70,9 +73,17 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+         'loaders':[
+             # insert template loaders here
+            'django.template.loaders.filesystem.Loader',
+            'django.template.loaders.app_directories.Loader',
+         ]
         },
     },
 ]
+
+
+# list of callabes that know howt o import templates from various  sources
 
 WSGI_APPLICATION = 'RideAlong.wsgi.application'
 
@@ -82,8 +93,12 @@ WSGI_APPLICATION = 'RideAlong.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'ridealong',
+        'USER': 'mbugua',
+        'PASSWORD':'morem',
     }
 }
 
